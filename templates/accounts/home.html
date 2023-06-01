@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+<head>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">  
+</head>
+
+<body>
+  {% block content %}
+  {% if messages%}
+    {% for message in messages%}
+      <div>{{ message.message }}</div>
+    {% endfor %}
+  {% endif %}
+  <h1 class="test">Mental Care Application</h1>
+  {% endblock %}
+</body>
