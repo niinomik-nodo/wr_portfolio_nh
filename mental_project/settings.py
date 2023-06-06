@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-=j+szf^*&f+5&b!gnnq*-2hz=k8pbzv169y@1(5_z-)$^tnmaf
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', 'pythonanywhere.com', '{|njmx2|}.pythonanywhere.com']
+ALLOWED_HOSTS = ['localhost', 'pythonanywhere.com', 'njmx2.pythonanywhere.com']
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
