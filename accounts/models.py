@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import (
-    AbstractBaseUser, PermissionsMixin
+    BaseUserManager, AbstractBaseUser, PermissionsMixin
 )
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -9,20 +9,48 @@ from datetime import datetime, timedelta
 from django.contrib.auth.models import UserManager
 
 # Create your models here.
+class UserManager(BaseUserManager):
 
+    def create_user(self, username, email, password=None):
+        if not email:
+            raise ValueError('Enter Email!')
+        user = self.model(
+            username=username,
+            email=email
+        )
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+    def create_superuser(self, username, email, password=None):
+        user = self.model(
+            username=username,
+            email=email,
+
+        )
+        user.set_password(password)
+        user.is_staff = True
+        user.is_active = True
+        user.is_superuser = True
+        user.save(using=self._db)
+        return user
+    
+        
 
 class Users(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=255)
     age = models.PositiveIntegerField()
     email = models.EmailField(max_length=255,unique=True)
     phone_number = models.IntegerField(default=False)
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     picture = models.FileField(null=True, upload_to='picture/')
 
     objects = UserManager()
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = ['username', 'age']
+
+    def __str__(self):
+        return self.email
 
     class Meta:
         db_table = 'users'
@@ -61,5 +89,8 @@ def publish_token(sender, instance, **kwargs):
 
     )
     print(f'http://127.0.0.1:8000/accounts/activate_user/{user_activate_token.token}')
+
+
+
 
     

@@ -78,6 +78,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mental_project.wsgi.application'
 
+AUTH_USER_MODEL = 'accounts.Users','accounts.Themes'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
